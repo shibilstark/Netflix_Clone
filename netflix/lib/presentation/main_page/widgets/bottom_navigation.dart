@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 
@@ -11,38 +12,58 @@ class BottomNavigationWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: indexChangedNotifier,
       builder: (BuildContext context, int newIndex, _) {
-        return BottomNavigationBar(
-          onTap: (index) => indexChangedNotifier.value = index,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: newIndex,
-          backgroundColor: backgroundColor,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
-          selectedIconTheme: IconThemeData(
-            color: Colors.grey,
+        return Container(
+          height: 70,
+          child: BottomNavigationBar(
+            onTap: (index) => indexChangedNotifier.value = index,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: newIndex,
+            backgroundColor: backgroundColor,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.grey,
+            selectedFontSize: 12,
+            iconSize: 27,
+            selectedIconTheme: IconThemeData(
+              color: whiteColor,
+            ),
+            items: const [
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 2),
+                  child: Icon(Icons.home),
+                ),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 2),
+                  child: Icon(Icons.collections),
+                ),
+                label: "New & Hot",
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 2),
+                  child: Icon(Icons.emoji_emotions),
+                ),
+                label: "Fast Laughs",
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 2),
+                  child: Icon(CupertinoIcons.search),
+                ),
+                label: "Search",
+              ),
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: EdgeInsets.only(bottom: 2),
+                  child: Icon(Icons.download_rounded),
+                ),
+                label: "Downloads",
+              ),
+            ],
           ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.collections),
-              label: "New & Hot",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_emotions),
-              label: "Fast Laughs",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: "Search",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.download),
-              label: "Downloads",
-            ),
-          ],
         );
       },
     );
