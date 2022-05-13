@@ -28,7 +28,11 @@ class AppBarWidget extends StatelessWidget {
             W: 10,
           ),
           Container(
-            color: Colors.blue,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.red, Colors.yellow])),
             width: 25,
             height: 25,
           ),

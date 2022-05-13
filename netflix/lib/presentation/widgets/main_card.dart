@@ -8,14 +8,17 @@ class MainCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      height: 180,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          // color: Colors.amber,
-          image: DecorationImage(
-              fit: BoxFit.cover, image: NetworkImage(samplePosters[2]))),
+    return Column(
+      children: [
+        Container(
+          width: 110,
+          height: 160,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              image: DecorationImage(
+                  fit: BoxFit.fill, image: NetworkImage(samplePosters[1]))),
+        ),
+      ],
     );
   }
 }
