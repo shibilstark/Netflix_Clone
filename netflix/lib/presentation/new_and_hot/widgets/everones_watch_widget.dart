@@ -22,41 +22,7 @@ class EveryOnesWatchingWidget extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(
-            //   width: 60,
-            //   // height: 500,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(
-            //       right: 5,
-            //     ),
-            //     child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.end,
-            //         mainAxisAlignment: MainAxisAlignment.start,
-            //         children: const [
-            //           Text(
-            //             "APR",
-            //             style: TextStyle(
-            //               letterSpacing: 2,
-            //               color: greyTextColor,
-            //               fontSize: 18,
-            //               fontWeight: FontWeight.w600,
-            //             ),
-            //           ),
-            //           Gap(
-            //             H: 5,
-            //           ),
-            //           Text(
-            //             "20",
-            //             style: TextStyle(
-            //               color: whiteColor,
-            //               fontSize: 33,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //         ]),
-            //   ),
-            // ),
-            Container(
+            SizedBox(
               width: size.width - 20,
               // height: 500,
               // decoration: const BoxDecoration(color: greyColor),

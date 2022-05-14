@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
 import 'package:netflix/presentation/widgets/app_bar_widget.dart';
@@ -46,14 +48,22 @@ class _SectionTwo extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final samplePosters = [
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/nj5HmHRZsrYQEYYXyAusFv35erP.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg",
-    "https://www.themoviedb.org/t/p/w220_and_h330_face/bcCBq9N1EMo3daNIjWJ8kYvrQm6.jpg"
-  ];
+  // final samplePosters = [
+  //   "https://www.themoviedb.org/t/p/w220_and_h330_face/nj5HmHRZsrYQEYYXyAusFv35erP.jpg",
+  //   "https://www.themoviedb.org/t/p/w220_and_h330_face/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg",
+  //   "https://www.themoviedb.org/t/p/w220_and_h330_face/bcCBq9N1EMo3daNIjWJ8kYvrQm6.jpg"
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    const imageBase = "https://image.tmdb.org/t/p/w500";
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      BlocProvider.of<DownloadsBloc>(context)
+          .add(const DownloadsEvent.getDownloadsImage());
+    });
+    // BlocProvider.of<DownloadsBloc>(context)
+    //     .add(const DownloadsEvent.getDownloadsImage());
+
     final size = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -82,42 +92,51 @@ class _SectionTwo extends StatelessWidget {
         const Gap(
           H: 20,
         ),
-        SizedBox(
-          // height: size.width,
-          width: size.width,
-          // color: whiteColor,
-          child: Stack(alignment: Alignment.center, children: [
-            Center(
-              child: CircleAvatar(
-                radius: size.width * 0.3,
-                backgroundColor: greyColor,
-              ),
-            ),
-            DownloadsImageWidget(
-              img: samplePosters[0],
-              margin: const EdgeInsets.only(
-                right: 150,
-              ),
-              angle: -15,
-            ),
-            DownloadsImageWidget(
-              img: samplePosters[1],
-              margin: const EdgeInsets.only(
-                left: 150,
-              ),
-              angle: 15,
-            ),
-            DownloadsImageWidget(
-              img: samplePosters[2],
-              margin: const EdgeInsets.only(
-                right: 0,
-                top: 10,
-              ),
-              angle: 0,
-              imgHeight: 0.48,
-              imgWidth: 0.3,
-            ),
-          ]),
+        BlocBuilder<DownloadsBloc, DownloadsState>(
+          builder: (context, state) {
+            return SizedBox(
+              height: 300,
+              width: size.width,
+              // color: whiteColor,
+              child: state.isLoading == true || state.downloads.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: greyColor,
+                    ))
+                  : Stack(alignment: Alignment.center, children: [
+                      Center(
+                        child: CircleAvatar(
+                          radius: size.width * 0.3,
+                          backgroundColor: greyColor,
+                        ),
+                      ),
+                      DownloadsImageWidget(
+                        img: "${imageBase + state.downloads[0].posterPath}",
+                        margin: const EdgeInsets.only(
+                          right: 150,
+                        ),
+                        angle: -15,
+                      ),
+                      DownloadsImageWidget(
+                        img: "${imageBase + state.downloads[1].posterPath}",
+                        margin: const EdgeInsets.only(
+                          left: 150,
+                        ),
+                        angle: 15,
+                      ),
+                      DownloadsImageWidget(
+                        img: "${imageBase + state.downloads[2].posterPath}",
+                        margin: const EdgeInsets.only(
+                          right: 0,
+                          top: 10,
+                        ),
+                        angle: 0,
+                        imgHeight: 0.48,
+                        imgWidth: 0.3,
+                      ),
+                    ]),
+            );
+          },
         ),
       ],
     );
@@ -132,7 +151,7 @@ class _SectionThree extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
           child: SizedBox(
             width: double.infinity,
             child: MaterialButton(
@@ -156,9 +175,7 @@ class _SectionThree extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 60,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
           child: SizedBox(
             width: double.infinity,
             child: MaterialButton(
@@ -232,17 +249,16 @@ class DownloadsImageWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Transform.rotate(
-      angle: angle * pi / 180,
-      child: Container(
-        margin: margin,
-        width: size.width * imgWidth,
-        height: size.width * imgHeight,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            image:
-                DecorationImage(fit: BoxFit.cover, image: NetworkImage(img))),
-      ),
-    );
+        angle: angle * pi / 180,
+        child: Container(
+          margin: margin,
+          width: size.width * imgWidth,
+          height: size.width * imgHeight,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              image:
+                  DecorationImage(fit: BoxFit.cover, image: NetworkImage(img))),
+        ));
   }
 }
 
