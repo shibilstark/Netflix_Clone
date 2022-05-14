@@ -111,14 +111,14 @@ class _SectionTwo extends StatelessWidget {
                         ),
                       ),
                       DownloadsImageWidget(
-                        img: "${imageBase + state.downloads[0].posterPath}",
+                        img: "${imageBase + state.downloads[1].posterPath}",
                         margin: const EdgeInsets.only(
                           right: 150,
                         ),
                         angle: -15,
                       ),
                       DownloadsImageWidget(
-                        img: "${imageBase + state.downloads[1].posterPath}",
+                        img: "${imageBase + state.downloads[0].posterPath}",
                         margin: const EdgeInsets.only(
                           left: 150,
                         ),

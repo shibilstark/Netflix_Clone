@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/search/bloc/search_bloc.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
 import 'package:netflix/presentation/search/widgets/search_text_widget.dart';
-
-final verticalImages = [
-  "https://www.themoviedb.org/t/p/w250_and_h141_face/iQFcwSGbZXMkeyKrxbPnwnRo5fl.jpg",
-  "https://www.themoviedb.org/t/p/w250_and_h141_face/eNI7PtK6DEYgZmHWP9gQNuff8pv.jpg"
-];
 
 class SearchIdleWidget extends StatelessWidget {
   const SearchIdleWidget({Key? key}) : super(key: key);
@@ -24,13 +20,36 @@ class SearchIdleWidget extends StatelessWidget {
           H: 10,
         ),
         Expanded(
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (context, index) => const TopSearchItemTile(),
-            separatorBuilder: (context, index) => const Gap(
-              H: 10,
-            ),
-            itemCount: 10,
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              if (state.isLoading) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: greyColor,
+                  ),
+                );
+              } else if (state.isError) {
+                return Text("Error While Getting Data Occured");
+              } else if (state.IdleList.isEmpty) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: greyColor,
+                  ),
+                );
+              }
+
+              return ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => TopSearchItemTile(
+                  imgUrl: state.IdleList[index].verticalImage,
+                  title: state.IdleList[index].title,
+                ),
+                separatorBuilder: (context, index) => const Gap(
+                  H: 10,
+                ),
+                itemCount: state.IdleList.length,
+              );
+            },
           ),
         ),
       ],
@@ -39,10 +58,15 @@ class SearchIdleWidget extends StatelessWidget {
 }
 
 class TopSearchItemTile extends StatelessWidget {
-  const TopSearchItemTile({Key? key}) : super(key: key);
+  final String title;
+  final String imgUrl;
+
+  const TopSearchItemTile({Key? key, required this.imgUrl, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const imageBase = "https://image.tmdb.org/t/p/w500";
     final screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
       width: double.infinity,
@@ -55,16 +79,19 @@ class TopSearchItemTile extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  fit: BoxFit.cover, image: NetworkImage(verticalImages[0]))),
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    imageBase + imgUrl,
+                  ))),
         ),
         const Gap(
-          W: 5,
+          W: 8,
         ),
-        const Expanded(
+        Expanded(
           child: Text(
-            "Movie Name",
+            title,
             textAlign: TextAlign.start,
-            style: TextStyle(color: whiteColor, fontSize: 18),
+            style: const TextStyle(color: whiteColor, fontSize: 18),
           ),
         ),
         // IconButton(

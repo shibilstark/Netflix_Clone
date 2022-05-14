@@ -1,5 +1,11 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/search/bloc/search_bloc.dart';
+import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
+import 'package:netflix/presentation/new_and_hot/screen_new_and_hot.dart';
 import 'package:netflix/presentation/search/widgets/search_text_widget.dart';
 
 class SearchResultWidget extends StatelessWidget {
@@ -7,6 +13,7 @@ class SearchResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const imageBase = "https://image.tmdb.org/t/p/w500";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -15,13 +22,29 @@ class SearchResultWidget extends StatelessWidget {
           H: 10,
         ),
         Expanded(
-          child: GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 2 / 3,
-            children: List.generate(20, (index) => MainPosterCard()),
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return GridView.count(
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 2 / 3,
+                children: List.generate(20, (index) {
+                  final movie = state.searchResultData[index];
+
+                  if (movie.posterPath!.isEmpty) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: greyColor),
+                    );
+                  } else {
+                    return MainPosterCard(
+                      imgUrl: imageBase + movie.posterPath!,
+                    );
+                  }
+                }),
+              );
+            },
           ),
         )
       ],
@@ -36,7 +59,8 @@ final samplePosters = [
 ];
 
 class MainPosterCard extends StatelessWidget {
-  const MainPosterCard({Key? key}) : super(key: key);
+  final String imgUrl;
+  const MainPosterCard({Key? key, required this.imgUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +69,7 @@ class MainPosterCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       image: DecorationImage(
         fit: BoxFit.cover,
-        image: NetworkImage(samplePosters[0]),
+        image: NetworkImage(imgUrl),
       ),
     ));
   }

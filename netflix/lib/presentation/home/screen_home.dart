@@ -135,6 +135,14 @@ class ScreenHome extends StatelessWidget {
                                       Image.network(
                                         "https://1000logos.net/wp-content/uploads/2017/05/Netflix-Logo-2006.png",
                                         width: 50,
+                                        errorBuilder: (BuildContext context,
+                                                Object img, StackTrace? str) =>
+                                            Container(
+                                          width: 40,
+                                          height: 40,
+                                          color:
+                                              Color.fromARGB(255, 20, 20, 20),
+                                        ),
                                       ),
                                       const Expanded(child: Gap()),
                                       IconButton(

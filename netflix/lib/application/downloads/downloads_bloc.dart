@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -17,26 +15,22 @@ class DownloadsBloc extends Bloc<DownloadsEvent, DownloadsState> {
 
   DownloadsBloc(this._downloadsRepo) : super(DownloadsState.initial()) {
     on<_GetDownloadsImage>((event, emit) async {
-      emit(state.copyWith(
-        isLoading: true,
-        downloadsFalureOrSuccess: none(),
-      ));
       final Either<MainFailure, List<Downloads>> downloadsOption =
           await _downloadsRepo.getDownloadsImages();
 
       emit(downloadsOption.fold(
         (failure) => state.copyWith(
-          isLoading: false,
+          isLoading: true,
           downloadsFalureOrSuccess: Some(
             Left(failure),
           ),
         ),
         (success) => state.copyWith(
           isLoading: false,
+          downloads: success,
           downloadsFalureOrSuccess: Some(
             Right(success),
           ),
-          downloads: success,
         ),
       ));
     });
