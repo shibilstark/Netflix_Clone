@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
+import 'package:netflix/presentation/new_and_hot/widgets/coming_soon_widget.dart';
+import 'package:netflix/presentation/new_and_hot/widgets/everones_watch_widget.dart';
+
+final samplerPosterHorizontal =
+    "https://www.themoviedb.org/t/p/w533_and_h300_bestv2/vNnLAKmoczRlNarxyGrrw0KSOeX.jpg";
 
 class ScreenNewAndHot extends StatelessWidget {
   const ScreenNewAndHot({Key? key}) : super(key: key);
@@ -45,7 +50,8 @@ class ScreenNewAndHot extends StatelessWidget {
               ),
               labelColor: blackColor,
               isScrollable: true,
-              labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              labelStyle:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               unselectedLabelColor: whiteColor,
 
               // labelPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -59,13 +65,34 @@ class ScreenNewAndHot extends StatelessWidget {
                 ),
               ]),
         ),
-        body: TabBarView(children: [
-
-          _buildComingSoon(){}
-         
-        ]),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TabBarView(children: [
+            _buiilComingSoon(context),
+            _buildEveryonesWatching(context),
+          ]),
+        ),
       ),
     );
   }
 }
 
+_buiilComingSoon(BuildContext context) {
+  return ListView.builder(
+    // separatorBuilder: ((context, index) => Gap()),
+    shrinkWrap: true,
+    itemCount: 3,
+    itemBuilder: (context, index) => ComingSoonWidget(),
+  );
+}
+
+_buildEveryonesWatching(BuildContext context) {
+  return ListView.separated(
+    separatorBuilder: ((context, index) => Gap(
+          H: 10,
+        )),
+    shrinkWrap: true,
+    itemCount: 3,
+    itemBuilder: (context, index) => EveryOnesWatchingWidget(),
+  );
+}
