@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
+import 'package:netflix/domain/downloads/core/api_end_points.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/nh_button_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
-import 'package:netflix/presentation/new_and_hot/screen_new_and_hot.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/nh_button_widget.dart';
 
 class EveryOnesWatchingWidget extends StatelessWidget {
@@ -103,24 +102,24 @@ class EveryOnesWatchingWidget extends StatelessWidget {
                             movieName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.green,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        NhButtonWidget(
+                        const NhButtonWidget(
                             icon: Icons.send_outlined, title: "Share"),
-                        Gap(
+                        const Gap(
                           W: 20,
                         ),
-                        NhButtonWidget(icon: Icons.add, title: "My List"),
-                        Gap(
+                        const NhButtonWidget(icon: Icons.add, title: "My List"),
+                        const Gap(
                           W: 20,
                         ),
-                        NhButtonWidget(
+                        const NhButtonWidget(
                             icon: Icons.play_arrow_rounded, title: "Play"),
-                        Gap(
+                        const Gap(
                           H: 10,
                         )
                       ],
@@ -131,32 +130,32 @@ class EveryOnesWatchingWidget extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Gap(
+                          const Gap(
                             H: 20,
                           ),
                           Text(
                             movieName,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: whiteColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Gap(
+                          const Gap(
                             H: 10,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 10),
                             child: Text(
                               description,
                               maxLines: 5,
-                              style:
-                                  TextStyle(color: greyTextColor, height: 1.3),
+                              style: const TextStyle(
+                                  color: greyTextColor, height: 1.3),
                             ),
                           ),
-                          Gap(
+                          const Gap(
                             H: 10,
                           ),
-                          Text(
+                          const Text(
                             "Action - Thriller - Drama - SciFi - Mystery - Fanatacy",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 194, 194, 194),

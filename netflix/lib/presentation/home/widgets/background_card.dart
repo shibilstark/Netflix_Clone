@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/application/home/homebloc_bloc.dart';
 import 'package:netflix/core/colors/colors.dart';
-import 'package:netflix/presentation/home/screen_home.dart';
+import 'package:netflix/core/strings.dart';
 import 'package:netflix/presentation/home/widgets/custom_button_widget.dart';
 
 class BackGroundCard extends StatelessWidget {
-  const BackGroundCard({Key? key}) : super(key: key);
+  const BackGroundCard({Key? key, required this.state}) : super(key: key);
+
+  final HomeblocState state;
 
   @override
   Widget build(BuildContext context) {
+    final moviePoster = imageBase + state.moviesList![0].posterPath.toString();
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -15,7 +20,7 @@ class BackGroundCard extends StatelessWidget {
           width: double.infinity,
           height: 600,
           decoration: BoxDecoration(
-              image: DecorationImage(image: NetworkImage(bigPosterImage))),
+              image: DecorationImage(image: NetworkImage(moviePoster))),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 0),
