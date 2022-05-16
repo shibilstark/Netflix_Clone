@@ -1,17 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
-import 'package:netflix/presentation/new_and_hot/screen_new_and_hot.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/nh_button_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
-  const ComingSoonWidget({
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String description;
+
+  ComingSoonWidget({
     Key? key,
+    required this.id,
+    required this.month,
+    required this.day,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    var _month = "";
+
+    if (month == "01") {
+      _month = "JAN";
+    } else if (month == "02") {
+      _month = "FEB";
+    } else if (month == "03") {
+      _month = "MAR";
+    } else if (month == "04") {
+      _month = "APR";
+    } else if (month == "05") {
+      _month = "MAY";
+    } else if (month == "06") {
+      _month = "JUN";
+    } else if (month == "07") {
+      _month = "JUL";
+    } else if (month == "08") {
+      _month = "AUG";
+    } else if (month == "09") {
+      _month = "SEP";
+    } else if (month == "10") {
+      _month = "OCT";
+    } else if (month == "11") {
+      _month = "NOV";
+    } else if (month == "12") {
+      _month = "DEC";
+    }
 
     return Column(
       children: [
@@ -20,6 +60,7 @@ class ComingSoonWidget extends StatelessWidget {
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               width: 60,
@@ -29,24 +70,24 @@ class ComingSoonWidget extends StatelessWidget {
                   right: 5,
                 ),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        "APR",
-                        style: TextStyle(
+                        _month,
+                        style: const TextStyle(
                           letterSpacing: 2,
                           color: greyTextColor,
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Gap(
+                      const Gap(
                         H: 5,
                       ),
                       Text(
-                        "20",
-                        style: TextStyle(
+                        day,
+                        style: const TextStyle(
                           color: whiteColor,
                           fontSize: 33,
                           fontWeight: FontWeight.bold,
@@ -72,7 +113,7 @@ class ComingSoonWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                             image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(samplerPosterHorizontal))),
+                                image: NetworkImage(posterPath))),
                       ),
                       SizedBox(
                         height: 200,
@@ -119,45 +160,56 @@ class ComingSoonWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Row(
-                      children: const [
+                      children: [
                         Expanded(
                           child: Text(
-                            "THE ARROW",
-                            style: TextStyle(
-                                color: Colors.green,
+                            movieName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: greyTextColor,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        NhButtonWidget(
+                        const NhButtonWidget(
                             icon: Icons.notifications_outlined,
                             title: "Remind Me"),
-                        Gap(
+                        const Gap(
                           W: 20,
                         ),
-                        NhButtonWidget(
+                        const NhButtonWidget(
                             icon: Icons.info_outlined, title: "Info"),
+                        const Gap(
+                          W: 10,
+                        ),
                       ],
                     ),
+                  ),
+                  const Gap(
+                    H: 5,
                   ),
                   SizedBox(
                     // padding: EdgeInsets.all(10),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Season 12 Coming Friday",
-                            style: TextStyle(color: lightGrey),
+                          Text(
+                            "Coming on $day $_month",
+                            style: const TextStyle(color: lightGrey),
+                          ),
+                          const Gap(
+                            H: 15,
                           ),
                           Image.asset(
                             "assets/img/NetFlixOriginal.jpg",
                             width: 80,
-                            height: 30,
+                            height: 10,
                             alignment: Alignment.centerLeft,
                           ),
-                          const Text(
-                            "The Arrow",
-                            style: TextStyle(
+                          Text(
+                            movieName,
+                            style: const TextStyle(
                                 color: whiteColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold),
@@ -165,17 +217,17 @@ class ComingSoonWidget extends StatelessWidget {
                           const Gap(
                             H: 10,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
                             child: Text(
-                              "Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow.",
-                              style: TextStyle(
-                                color: greyTextColor,
-                              ),
+                              description,
+                              maxLines: 5,
+                              style: const TextStyle(
+                                  color: greyTextColor, height: 1.3),
                             ),
                           ),
                           const Gap(
-                            H: 10,
+                            H: 15,
                           ),
                           const Text(
                             "Action - Thriller - Drama - SciFi - Mystery - Fanatacy",

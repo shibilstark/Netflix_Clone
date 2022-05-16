@@ -37,6 +37,8 @@ class SearchResultWidget extends StatelessWidget {
                     return const Center(
                       child: CircularProgressIndicator(color: greyColor),
                     );
+                  } else if (state.isError) {
+                    return CircularProgressIndicator();
                   } else {
                     return MainPosterCard(
                       imgUrl: imageBase + movie.posterPath!,

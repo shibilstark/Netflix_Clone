@@ -21,6 +21,7 @@ class ScreenSearch extends StatelessWidget {
       BlocProvider.of<SearchBloc>(context).add(Intialize());
     });
     // BlocProvider.of<SearchBloc>(context).add(Intialize());
+    // _controller.clear();
 
     return Scaffold(
       body: SafeArea(
@@ -71,44 +72,13 @@ class ScreenSearch extends StatelessWidget {
             const Gap(
               H: 10,
             ),
-            // Expanded(
-            //   child: SearchIdleWidget(),
-            // ),
-            // Gap(
-            //   H: 10,
-            // ),
             Expanded(
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
-                  if (state.searchResultData.isEmpty
-                      // ||
-                      //     _controller.value.text.trim().isEmpty
-                      ) {
-                    // return SearchIdleWidget();
-                    return Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // SizedBox(
-                          //   height: 10,
-                          //   width: 10,
-                          //   child: CircularProgressIndicator(
-                          //     strokeWidth: 2,
-                          //     color: greyColor,
-                          //   ),
-                          // ),
-                          // Gap(
-                          //   W: 10,
-                          // ),
-                          Text(
-                            "Not Found",
-                            style: TextStyle(color: greyColor),
-                          ),
-                        ],
-                      ),
-                    );
+                  if (state.searchResultData.isEmpty) {
+                    return const SearchIdleWidget();
                   } else {
-                    return SearchResultWidget();
+                    return const SearchResultWidget();
                   }
                 },
               ),

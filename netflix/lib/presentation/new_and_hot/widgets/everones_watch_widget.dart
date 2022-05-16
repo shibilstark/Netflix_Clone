@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/colors/common.dart';
@@ -6,10 +5,22 @@ import 'package:netflix/presentation/new_and_hot/screen_new_and_hot.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/nh_button_widget.dart';
 
 class EveryOnesWatchingWidget extends StatelessWidget {
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String description;
+
   const EveryOnesWatchingWidget({
     Key? key,
-  }) : super(key: key);
-
+    required this.id,
+    required this.month,
+    required this.day,
+    required this.posterPath,
+    required this.movieName,
+    required this.description,
+  });
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,7 +50,7 @@ class EveryOnesWatchingWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                             image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(samplerPosterHorizontal))),
+                                image: NetworkImage(posterPath))),
                       ),
                       SizedBox(
                         height: 200,
@@ -86,10 +97,12 @@ class EveryOnesWatchingWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Row(
-                      children: const [
+                      children: [
                         Expanded(
                           child: Text(
-                            "THE ARROW",
+                            movieName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 30,
@@ -117,12 +130,12 @@ class EveryOnesWatchingWidget extends StatelessWidget {
                     // padding: EdgeInsets.all(10),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Gap(
                             H: 20,
                           ),
                           Text(
-                            "The Arrow",
+                            movieName,
                             style: TextStyle(
                                 color: whiteColor,
                                 fontSize: 22,
@@ -134,10 +147,10 @@ class EveryOnesWatchingWidget extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(right: 10),
                             child: Text(
-                              "Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow.",
-                              style: TextStyle(
-                                color: greyTextColor,
-                              ),
+                              description,
+                              maxLines: 5,
+                              style:
+                                  TextStyle(color: greyTextColor, height: 1.3),
                             ),
                           ),
                           Gap(
